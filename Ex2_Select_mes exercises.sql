@@ -64,15 +64,16 @@ SELECT `NOMCLI`, `RUECLI`, `VILLECLI` FROM `client`;
 -- 2. Afficher la liste des clients de Marseille et d'Aix en Provence.
 
 SELECT `NOMCLI` FROM `client` WHERE `VILLECLI` = "Marseille" OR `VILLECLI` = "Aix En Provence";
+SELECT `NOMCLI` FROM `client` WHERE villecli IN ("Marseille", "Aix en Provence");
 
--- 3. Afficher les matériels dont le prix est compris entre 4 000 et 15 000 €.
+-- 3. Afficher les matériels dont le prix est compris entre 4 000 et 15 000 €
 
 SELECT `LIBMAT` FROM `materiel`;
 SELECT LIBMAT FROM materiel WHERE PVMAT BETWEEN 4000 AND 15000; 
 
 -- 4. Afficher les clients dont le nom commence par A
 
-SELECT NOMCLI FROM `client` WHERE NOMCLI LIKE "a%";
+SELECT NOMCLI FROM `client` WHERE NOMCLI LIKE "D%";
 
 -- 5. Afficher les clients dont le nom de famille est DUPONT ou DANNA
 
@@ -82,10 +83,12 @@ SELECT NOMCLI FROM `client` WHERE NOMCLI LIKE 'DUPONT%' OR NOMCLI LIKE 'DANNA%';
 -- un P, tels que leur siège social est à Aix en Provence et leur chiffre d’affaires est
 -- supérieur ou égal à 50.000 € et inférieur à 100.000 €.
 
-SELECT NOMCLI,`RUECLI`, CACLI, VILLECLI FROM `client` WHERE (NOMCLI LIKE "D%" OR "P%") AND 
-(`VILLECLI` = "Aix en Provence") AND (`CACLI` >= 50000 OR `CACLI` < 100000);
+SELECT NOMCLI,`RUECLI`, CACLI, VILLECLI FROM `client` WHERE (NOMCLI LIKE "D%" OR "P%")
+ AND (`VILLECLI` = "Aix en Provence")
+ AND (`CACLI` >= 50000 OR `CACLI` < 100000);
 
 -- 5. Faites en sorte que les en-têtes de colonnes du résultat de la requête
 -- précédente soient explicites, par exemple : Nom du client au lieu de nomcli
 
 SELECT NOMCLI as "Nom du client", RUECLI as "Nom de la rue", CACLI as "Code Postal", VILLECLI as "Ville" FROM client;
+SELECT NOMCLI as "Nom du client", concat(ruecli, ' ', cpcli,' ', villecli) AS 'Adresse' FROM client;
